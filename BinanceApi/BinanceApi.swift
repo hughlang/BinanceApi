@@ -153,13 +153,15 @@ public struct BinanceCandlesticksRequest: BinanceRequest {
 
         public init(from decoder: Decoder) throws {
             var values = try decoder.unkeyedContainer()
-            self.openTime = try values.decode(Date.self)
+            let openTime = try values.decode(Double.self)
+            self.openTime = Date(timeIntervalSince1970: openTime/1000.0)
             self.open = try values.decode(Decimal.self)
             self.high = try values.decode(Decimal.self)
             self.low = try values.decode(Decimal.self)
             self.close = try values.decode(Decimal.self)
             self.assetVolume = try values.decode(Decimal.self)
-            self.closeTime = try values.decode(Date.self)
+            let closeTime = try values.decode(Double.self)
+            self.closeTime = Date(timeIntervalSince1970: closeTime/1000.0)
             self.quoteVolume = try values.decode(Decimal.self)
             self.trades = try values.decode(UInt64.self)
             self.buyAssetVolume = try values.decode(Decimal.self)
